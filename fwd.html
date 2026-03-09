@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CO-1: Apply Internet Fundamentals, HTML & Introductory CSS Styling -->
+    <title>Creative Invitation</title>
+
+    <style>
+        /* CO-1: Introductory CSS Styling */
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* CO-2: Comprehensive CSS Layouts */
+        .container {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .card {
+            margin-top: 15px;
+            background: #f1f2f6;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CO-2: Using Semantic Structure -->
+    <div class="container">
+
+        <!-- SIGNUP FORM -->
+        <!-- CO-2: Apply HTML Forms & Semantic Structure -->
+        <div id="signupSection">
+            <h2>Create Account</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="createAccount()">Sign Up</button>
+            <p style="text-align:center;">
+                Already user? <a href="#" onclick="showLogin()">Login</a>
+            </p>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="loginSection" class="hide">
+            <h2>Login</h2>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="loginUser()">Login</button>
+            <p id="error" style="color:red;text-align:center;"></p>
+        </div>
+
+        <!-- INVITATION SECTION -->
+        <div id="inviteSection" class="hide">
+            <h2>Create Invitation</h2>
+            <input type="text" id="title" placeholder="Event Title">
+            <input type="text" id="date" placeholder="Date">
+            <input type="text" id="venue" placeholder="Venue">
+            <textarea id="message" placeholder="Message"></textarea>
+            <button onclick="generateCard()">Generate</button>
+            <button onclick="logout()" style="background:black;margin-top:5px;">Logout</button>
+
+            <div id="card" class="card hide">
+                <h3 id="cTitle"></h3>
+                <p id="cDate"></p>
+                <p id="cVenue"></p>
+                <p id="cMessage"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        /* CO-3: Apply JavaScript Programming Essentials 
+           - Variables
+           - Functions
+           - Conditional Statements
+           - Local Storage
+        */
+
+        /* CO-4: Apply JavaScript Interactivity & DOM Manipulation */
+
+        function showLogin() {
+            document.getElementById("signupSection").classList.add("hide");
+            document.getElementById("loginSection").classList.remove("hide");
+        }
+
+        function createAccount() {
+            let email = document.getElementById("email").value;
+            let pass = document.getElementById("password").value;
+
+            if (email === "" || pass === "") {
+                alert("Fill all fields");
+                return;
+            }
+
+            /* CO-5: Advanced Web Development Concept
+               - Using Browser Local Storage (Client-Side Storage)
+            */
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userPass", pass);
+
+            alert("Account Created Successfully!");
+            showLogin();
+        }
+
+        function loginUser() {
+            let email = document.getElementById("loginEmail").value;
+            let pass = document.getElementById("loginPassword").value;
+
+            let storedEmail = localStorage.getItem("userEmail");
+            let storedPass = localStorage.getItem("userPass");
+
+            if (email === storedEmail && pass === storedPass) {
+                document.getElementById("loginSection").classList.add("hide");
+                document.getElementById("inviteSection").classList.remove("hide");
+            } else {
+                document.getElementById("error").innerText = "Invalid Email or Password";
+            }
+        }
+
+        function generateCard() {
+            document.getElementById("cTitle").innerText =
+                document.getElementById("title").value;
+
+            document.getElementById("cDate").innerText =
+                "Date: " + document.getElementById("date").value;
+
+            document.getElementById("cVenue").innerText =
+                "Venue: " + document.getElementById("venue").value;
+
+            document.getElementById("cMessage").innerText =
+                document.getElementById("message").value;
+
+            document.getElementById("card").classList.remove("hide");
+        }
+
+        function logout() {
+            document.getElementById("inviteSection").classList.add("hide");
+            showLogin();
+        }
+
+    </script>
+
+    <!-- CO-5: Deployment Ready
+     - Can be hosted using GitHub Pages / Netlify / Local Server
+-->
+
+</body>
+
+</html>
